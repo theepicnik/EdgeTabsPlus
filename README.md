@@ -35,6 +35,10 @@ If you want to install it locally:
 2. Add a new Group Rule with your target Group Name, Color, and Domain Patterns (e.g., `*.amazon.com`).
 3. Open matching URLs—they will instantly sort into their designated groups!
 
+## 🔒 Privacy
+
+**EdgeTabsPlus** runs 100% locally in your browser. Your group rules are stored via `chrome.storage.sync` (and optionally exported/imported as local JSON files). No browsing history, telemetry, or external tracking data is collected or sent to third-party servers.
+
 ## 🤝 Contributing
 
 Contributions, issues, and feature requests are welcome! Feel free to check out the [issues page](../../issues).
