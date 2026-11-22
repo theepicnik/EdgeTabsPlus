@@ -86,17 +86,31 @@ function isRestrictedUrl(url) {
   return restrictedPrefixes.some((prefix) => url.startsWith(prefix));
 }
 
-async function handleTabGrouping(tab) {
-  if (!tab || tab.id === undefined) return;
-  const targetUrl = tab.url || tab.pendingUrl;
+async function handleTabGrouping(tabId, overrideUrl = null) {
+  if (tabId === undefined) return;
 
+  let tab;
+  try {
+    tab = await chrome.tabs.get(tabId);
+  } catch {
+    return; // Tab may have been closed
+  }
+
+  const targetUrl = overrideUrl || tab.url || tab.pendingUrl;
   if (isRestrictedUrl(targetUrl)) return;
 
   const { rules = [] } = await chrome.storage.sync.get("rules");
   const matchedRule = findMatchingRule(targetUrl, rules);
-  if (!matchedRule) return;
 
   try {
+    // If URL doesn't match any rule, ungroup it if it inherited a parent group
+    if (!matchedRule) {
+      if (tab.groupId !== undefined && tab.groupId !== -1) {
+        await chrome.tabs.ungroup(tab.id);
+      }
+      return;
+    }
+
     const existingGroups = await chrome.tabGroups.query({
       windowId: tab.windowId,
       title: matchedRule.name
@@ -131,11 +145,11 @@ async function handleTabGrouping(tab) {
 // Listen for tab updates
 chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
   if (changeInfo.status === "complete" || changeInfo.url) {
-    handleTabGrouping(tab);
+    handleTabGrouping(tabId, changeInfo.url || tab.url || tab.pendingUrl);
   }
 });
 
 // Listen for brand-new tabs being created
 chrome.tabs.onCreated.addListener((tab) => {
-  handleTabGrouping(tab);
+  handleTabGrouping(tab.id, tab.url || tab.pendingUrl);
 });
