@@ -2,8 +2,6 @@
 
 A lightweight, high-performance browser extension for **Microsoft Edge** (and Chromium browsers) that automatically organizes your tabs into custom color-coded groups based on user-defined domain and URL patterns.
 
-![EdgeTabsPlus Demo](./assets/demo.gif)
-
 ## 🔗 Install
 
 - **Manual / Developer Mode (Edge, Brave, Chrome):** Download `EdgeTabsPlus-v1.1.0.zip` from the [Releases page](../../releases), extract it, and open `edge://extensions` (or `chrome://extensions`) with **Developer mode** enabled.
