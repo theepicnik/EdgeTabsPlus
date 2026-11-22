@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EdgeTabsPlus — Settings</title>
+  <style>
+    :root {
+      --bg: #f5f7fa;
+      --card: #ffffff;
+      --text: #1f2937;
+      --muted: #6b7280;
+      --border: #e5e7eb;
+      --primary: #0078d4;
+      --primary-hover: #0063b1;
+      --danger: #dc2626;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      margin: 0;
+      padding: 32px 16px;
+    }
+
+    .container {
+      max-width: 760px;
+      margin: 0 auto;
+    }
+
+    header {
+      margin-bottom: 24px;
+    }
+
+    h1 {
+      margin: 0 0 6px 0;
+      font-size: 24px;
+    }
+
+    p.subtitle {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    label {
+      display: block;
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+
+    input[type="text"],
+    select,
+    textarea {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 9px 12px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      font-size: 14px;
+      font-family: inherit;
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 70px;
+    }
+
+    .hint {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 4px;
+    }
+
+    .btn-row {
+      display: flex;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    button {
+      padding: 9px 16px;
+      border: none;
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: #fff;
+    }
+
+    .btn-primary:hover {
+      background: var(--primary-hover);
+    }
+
+    .btn-secondary {
+      background: #e5e7eb;
+      color: var(--text);
+    }
+
+    .btn-danger {
+      background: #fee2e2;
+      color: var(--danger);
+    }
+
+    .rule-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      padding: 16px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      margin-bottom: 12px;
+      background: #fff;
+    }
+
+    .rule-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 8px;
+    }
+
+    .badge {
+      padding: 3px 10px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 600;
+      color: #fff;
+    }
+
+    .patterns-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .pattern-pill {
+      background: #f3f4f6;
+      border: 1px solid #d1d5db;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-family: monospace;
+      font-size: 12px;
+    }
+
+    .rule-actions {
+      display: flex;
+      gap: 8px;
+    }
+
+    /* Edge Tab Group Colors */
+    .color-blue,
+    .color-royal-blue {
+      background: #1a73e8;
+    }
+
+    .color-pink {
+      background: #d01884;
+    }
+
+    .color-violet {
+      background: #8b5cf6;
+    }
+
+    .color-purple {
+      background: #7e22ce;
+    }
+
+    .color-teal,
+    .color-cyan {
+      background: #007b83;
+    }
+
+    .color-orange-yellow,
+    .color-orange {
+      background: #fa903e;
+      color: #202124;
+    }
+
+    .color-gray,
+    .color-grey {
+      background: #5f6368;
+    }
+
+    /* Legacy Chrome fallback badges */
+    .color-red {
+      background: #d93025;
+    }
+
+    .color-yellow {
+      background: #f9ab00;
+      color: #202124;
+    }
+
+    .color-green {
+      background: #188038;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <header>
+      <h1>EdgeTabsPlus Settings</h1>
+      <p class="subtitle">Define custom tab groups and URL patterns. Matching tabs will be grouped automatically.</p>
+    </header>
+
+    <div class="card">
+      <form id="rule-form">
+        <input type="hidden" id="rule-id" />
+        <div class="form-row">
+          <div>
+            <label for="group-name">Group Name</label>
+            <input type="text" id="group-name" placeholder="e.g., Cloud" required />
+          </div>
+          <div>
+            <label for="group-color">Group Color</label>
+            <select id="group-color">
+              <option value="blue">Blue</option>
+              <option value="pink">Pink</option>
+              <option value="violet">Violet</option>
+              <option value="purple">Purple</option>
+              <option value="royal-blue">Royal Blue</option>
+              <option value="teal">Teal</option>
+              <option value="orange-yellow">Orange Yellow</option>
+              <option value="gray">Gray</option>
+            </select>
+          </div>
+        </div>
+
+        <div>
+          <label for="url-patterns">URL / Domain Patterns</label>
+          <textarea id="url-patterns" placeholder="aws.amazon.com, *.azure.com" required></textarea>
+          <div class="hint">Separate multiple patterns with commas or new lines.</div>
+        </div>
+
+        <div class="btn-row">
+          <button type="submit" class="btn-primary" id="save-btn">Add Group Rule</button>
+          <button type="button" class="btn-secondary" id="cancel-btn" style="display: none;">Cancel Edit</button>
+        </div>
+      </form>
+    </div>
+
+    <div id="rules-container"></div>
+
+    <div class="card" style="display: flex; gap: 10px; align-items: center; justify-content: space-between;">
+      <div>
+        <h3 style="margin: 0 0 4px 0; font-size: 16px;">Backup & Restore Rules</h3>
+        <p style="margin: 0; font-size: 13px; color: var(--muted);">Export your custom group rules to a file or import
+          them on another browser.</p>
+      </div>
+      <div style="display: flex; gap: 8px;">
+        <button type="button" class="btn-secondary" id="export-btn">Export JSON</button>
+        <button type="button" class="btn-secondary" id="import-btn">Import JSON</button>
+        <input type="file" id="import-file" accept=".json" style="display: none;" />
+      </div>
+    </div>
+  </div>
+
+  <script src="options.js"></script>
+</body>
+
+</html>
